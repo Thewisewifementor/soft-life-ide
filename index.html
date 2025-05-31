@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soft Life + Next-Level Life IDE</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState } = React;
+        const { ChevronRight, Heart, Star, CheckCircle, Calendar, Users, Sparkles, Crown, Coffee, Target } = lucide;
+
+        function SoftLifeIDE() {
+            const [currentDay, setCurrentDay] = useState(1);
+            const [completedDays, setCompletedDays] = useState(new Set());
+            const [currentWeek, setCurrentWeek] = useState(1);
+
+            const weeks = [
+                {
+                    id: 1,
+                    title: "Foundation",
+                    subtitle: "Creating Your Soft Life Base",
+                    icon: React.createElement(Heart, { className: "w-6 h-6" }),
+                    color: "from-pink-400 to-rose-400",
+                    focus: "From Chaos to Calm"
+                },
+                {
+                    id: 2,
+                    title: "Systems",
+                    subtitle: "Building Soft Life Boundaries",
+                    icon: React.createElement(Star, { className: "w-6 h-6" }),
+                    color: "from-purple-400 to-pink-400",
+                    focus: "Holy Boundaries"
+                },
+                {
+                    id: 3,
+                    title: "Strategy",
+                    subtitle: "Next-Level Life Planning",
+                    icon: React.createElement(Target, { className: "w-6 h-6" }),
+                    color: "from-blue-400 to-purple-400",
+                    focus: "Strategic Softness"
+                },
+                {
+                    id: 4,
+                    title: "Integration",
+                    subtitle: "Sustainable Momentum",
+                    icon: React.createElement(Crown, { className: "w-6 h-6" }),
+                    color: "from-emerald-400 to-blue-400",
+                    focus: "Living in Flow"
+                }
+            ];
+
+            const dailyActivities = {
+                1: { title: "Soft Life Audit", activity: "What needs to go?", type: "reflection" },
+                2: { title: "Energy Assessment", activity: "Identify your drains", type: "interactive" },
+                3: { title: "Values Deep Dive", activity: "What matters most?", type: "quiz" },
+                4: { title: "Vision Board Digital", activity: "Create your soft life vision", type: "creative" },
+                5: { title: "Environment Design", activity: "Transform your space", type: "challenge" },
+                6: { title: "Morning Ritual", activity: "Design your peaceful start", type: "ritual" },
+                7: { title: "Evening Wind-Down", activity: "Create your soft close", type: "ritual" }
+            };
+
+            const markComplete = (day) => {
+                const newCompleted = new Set(completedDays);
+                if (newCompleted.has(day)) {
+                    newCompleted.delete(day);
+                } else {
+                    newCompleted.add(day);
+                }
+                setCompletedDays(newCompleted);
+            };
+
+            const getProgressPercent = () => {
+                return Math.round((completedDays.size / 30) * 100);
+            };
+
+            return React.createElement('div', { className: "min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50" },
+                React.createElement('div', { className: "bg-white/80 backdrop-blur-sm border-b border-pink-100 sticky top-0 z-50" },
+                    React.createElement('div', { className: "max-w-4xl mx-auto px-6 py-4" },
+                        React.createElement('div', { className: "flex items-center justify-between" },
+                            React.createElement('div', null,
+                                React.createElement('h1', { className: "text-2xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent" }, "Soft Life + Next-Level Life"),
+                                React.createElement('p', { className: "text-gray-600 text-sm" }, "30-day transformation journey")
+                            ),
+                            React.createElement('div', { className: "flex items-center gap-4" },
+                                React.createElement('div', { className: "text-right" },
+                                    React.createElement('p', { className: "text-sm text-gray-500" }, "Progress"),
+                                    React.createElement('p', { className: "font-bold text-purple-600" }, getProgressPercent() + "%")
+                                ),
+                                React.createElement('div', { className: "w-12 h-12 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full flex items-center justify-center" },
+                                    React.createElement(Sparkles, { className: "w-6 h-6 text-white" })
+                                )
+                            )
+                        )
+                    )
+                ),
+                React.createElement('div', { className: "max-w-4xl mx-auto px-6 py-8" },
+                    React.createElement('div', { className: "text-center mb-8" },
+                        React.createElement('h2', { className: "text-3xl font-bold text-gray-800 mb-4" }, "🎉 YOUR IDE IS LIVE! 🎉"),
+                        React.createElement('p', { className: "text-lg text-gray-600" }, "Welcome to your Soft Life + Next-Level Life transformation platform!"),
+                        React.createElement('p', { className: "text-purple-600 font-medium mt-2" }, "Click on the days below to track your progress")
+                    ),
+                    React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" },
+                        weeks.map(week => 
+                            React.createElement('div', {
+                                key: week.id,
+                                onClick: () => setCurrentWeek(week.id),
+                                className: `p-4 rounded-xl cursor-pointer transition-all duration-300 ${
+                                    currentWeek === week.id
+                                        ? `bg-gradient-to-r ${week.color} text-white shadow-lg scale-105`
+                                        : 'bg-white/60 hover:bg-white/80'
+                                }`
+                            },
+                                React.createElement('div', { className: "flex items-center gap-3 mb-2" },
+                                    week.icon,
+                                    React.createElement('h3', { className: "font-bold" }, `Week ${week.id}`)
+                                ),
+                                React.createElement('p', { className: `text-sm ${currentWeek === week.id ? 'text-white/90' : 'text-gray-600'}` }, week.title),
+                                React.createElement('p', { className: `text-xs ${currentWeek === week.id ? 'text-white/80' : 'text-gray-500'}` }, week.subtitle)
+                            )
+                        )
+                    ),
+                    React.createElement('div', { className: `p-6 rounded-xl bg-gradient-to-r ${weeks[currentWeek-1].color} text-white mb-8` },
+                        React.createElement('div', { className: "flex items-center gap-3 mb-3" },
+                            weeks[currentWeek-1].icon,
+                            React.createElement('h2', { className: "text-2xl font-bold" }, `Week ${currentWeek}: ${weeks[currentWeek-1].title}`)
+                        ),
+                        React.createElement('p', { className: "text-white/90 text-lg mb-2" }, weeks[currentWeek-1].subtitle),
+                        React.createElement('p', { className: "text-white/80" }, `Focus: ${weeks[currentWeek-1].focus}`)
+                    ),
+                    React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8" },
+                        Object.entries(dailyActivities).map(([day, activity]) => {
+                            const dayNum = parseInt(day);
+                            const isCompleted = completedDays.has(dayNum);
+                            const isCurrentDay = dayNum === currentDay;
+                            
+                            return React.createElement('div', {
+                                key: day,
+                                className: `p-4 rounded-xl border-2 transition-all duration-300 cursor-pointer ${
+                                    isCompleted
+                                        ? 'bg-gradient-to-r from-green-400 to-emerald-400 text-white border-green-300'
+                                        : isCurrentDay
+                                        ? 'bg-white border-purple-300 shadow-lg scale-105'
+                                        : 'bg-white/60 border-gray-200 hover:border-purple-200 hover:shadow-md'
+                                }`,
+                                onClick: () => markComplete(dayNum)
+                            },
+                                React.createElement('div', { className: "flex items-center justify-between mb-3" },
+                                    React.createElement('span', { className: `text-sm font-medium ${isCompleted ? 'text-white/90' : 'text-gray-500'}` }, `Day ${day}`),
+                                    isCompleted 
+                                        ? React.createElement(CheckCircle, { className: "w-5 h-5 text-white" })
+                                        : React.createElement('div', { className: "w-5 h-5 border-2 border-gray-300 rounded-full" })
+                                ),
+                                React.createElement('h4', { className: `font-bold mb-2 ${isCompleted ? 'text-white' : 'text-gray-800'}` }, activity.title),
+                                React.createElement('p', { className: `text-sm mb-3 ${isCompleted ? 'text-white/90' : 'text-gray-600'}` }, activity.activity),
+                                React.createElement('div', { className: "flex items-center justify-between" },
+                                    React.createElement('span', { 
+                                        className: `text-xs px-2 py-1 rounded-full ${
+                                            isCompleted 
+                                                ? 'bg-white/20 text-white' 
+                                                : activity.type === 'reflection' 
+                                                ? 'bg-pink-100 text-pink-700'
+                                                : activity.type === 'interactive'
+                                                ? 'bg-purple-100 text-purple-700'
+                                                : activity.type === 'quiz'
+                                                ? 'bg-blue-100 text-blue-700'
+                                                : activity.type === 'creative'
+                                                ? 'bg-orange-100 text-orange-700'
+                                                : activity.type === 'challenge'
+                                                ? 'bg-red-100 text-red-700'
+                                                : 'bg-green-100 text-green-700'
+                                        }`
+                                    }, activity.type),
+                                    !isCompleted && React.createElement(ChevronRight, { className: "w-4 h-4 text-gray-400" })
+                                )
+                            );
+                        })
+                    )
+                )
+            );
+        }
+
+        ReactDOM.render(React.createElement(SoftLifeIDE), document.getElementById('root'));
+    </script>
+</body>
+</html>
