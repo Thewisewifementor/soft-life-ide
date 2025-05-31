@@ -1,193 +1,293 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soft Life + Next-Level Life IDE</title>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #fce7f3, #fdf2f8, #f3e8ff); }
+        .gradient-text { background: linear-gradient(135deg, #db2777, #9333ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .week-card { transition: all 0.3s ease; }
+        .week-card:hover { transform: scale(1.05); }
+        .day-card { transition: all 0.3s ease; cursor: pointer; }
+        .day-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .completed { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+    </style>
 </head>
-<body>
-    <div id="root"></div>
-    
-    <script type="text/babel">
-        const { useState } = React;
-        const { ChevronRight, Heart, Star, CheckCircle, Calendar, Users, Sparkles, Crown, Coffee, Target } = lucide;
+<body class="gradient-bg min-h-screen">
+    <!-- Header -->
+    <div class="bg-white/80 backdrop-blur-sm border-b border-pink-100 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold gradient-text">Soft Life + Next-Level Life</h1>
+                    <p class="text-gray-600 text-sm">30-day transformation journey</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="text-right">
+                        <p class="text-sm text-gray-500">Progress</p>
+                        <p class="font-bold text-purple-600" id="progress-percent">0%</p>
+                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full flex items-center justify-center">
+                        <span class="text-white text-xl">✨</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        function SoftLifeIDE() {
-            const [currentDay, setCurrentDay] = useState(1);
-            const [completedDays, setCompletedDays] = useState(new Set());
-            const [currentWeek, setCurrentWeek] = useState(1);
+    <div class="max-w-4xl mx-auto px-6 py-8">
+        <!-- Success Message -->
+        <div class="text-center mb-8 p-6 bg-white/80 rounded-xl">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">🎉 YOUR IDE IS LIVE! 🎉</h2>
+            <p class="text-lg text-gray-600 mb-2">Welcome to your Soft Life + Next-Level Life transformation platform!</p>
+            <p class="text-purple-600 font-medium">Click on the days below to track your progress</p>
+        </div>
 
-            const weeks = [
-                {
-                    id: 1,
-                    title: "Foundation",
-                    subtitle: "Creating Your Soft Life Base",
-                    icon: React.createElement(Heart, { className: "w-6 h-6" }),
-                    color: "from-pink-400 to-rose-400",
-                    focus: "From Chaos to Calm"
-                },
-                {
-                    id: 2,
-                    title: "Systems",
-                    subtitle: "Building Soft Life Boundaries",
-                    icon: React.createElement(Star, { className: "w-6 h-6" }),
-                    color: "from-purple-400 to-pink-400",
-                    focus: "Holy Boundaries"
-                },
-                {
-                    id: 3,
-                    title: "Strategy",
-                    subtitle: "Next-Level Life Planning",
-                    icon: React.createElement(Target, { className: "w-6 h-6" }),
-                    color: "from-blue-400 to-purple-400",
-                    focus: "Strategic Softness"
-                },
-                {
-                    id: 4,
-                    title: "Integration",
-                    subtitle: "Sustainable Momentum",
-                    icon: React.createElement(Crown, { className: "w-6 h-6" }),
-                    color: "from-emerald-400 to-blue-400",
-                    focus: "Living in Flow"
-                }
-            ];
+        <!-- Week Navigator -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="week-card p-4 rounded-xl bg-gradient-to-r from-pink-400 to-rose-400 text-white shadow-lg">
+                <div class="flex items-center gap-3 mb-2">
+                    <span>❤️</span>
+                    <h3 class="font-bold">Week 1</h3>
+                </div>
+                <p class="text-sm text-white/90">Foundation</p>
+                <p class="text-xs text-white/80">Creating Your Soft Life Base</p>
+            </div>
+            
+            <div class="week-card p-4 rounded-xl bg-white/60 hover:bg-white/80">
+                <div class="flex items-center gap-3 mb-2">
+                    <span>⭐</span>
+                    <h3 class="font-bold">Week 2</h3>
+                </div>
+                <p class="text-sm text-gray-600">Systems</p>
+                <p class="text-xs text-gray-500">Building Soft Life Boundaries</p>
+            </div>
+            
+            <div class="week-card p-4 rounded-xl bg-white/60 hover:bg-white/80">
+                <div class="flex items-center gap-3 mb-2">
+                    <span>🎯</span>
+                    <h3 class="font-bold">Week 3</h3>
+                </div>
+                <p class="text-sm text-gray-600">Strategy</p>
+                <p class="text-xs text-gray-500">Next-Level Life Planning</p>
+            </div>
+            
+            <div class="week-card p-4 rounded-xl bg-white/60 hover:bg-white/80">
+                <div class="flex items-center gap-3 mb-2">
+                    <span>👑</span>
+                    <h3 class="font-bold">Week 4</h3>
+                </div>
+                <p class="text-sm text-gray-600">Integration</p>
+                <p class="text-xs text-gray-500">Sustainable Momentum</p>
+            </div>
+        </div>
 
-            const dailyActivities = {
-                1: { title: "Soft Life Audit", activity: "What needs to go?", type: "reflection" },
-                2: { title: "Energy Assessment", activity: "Identify your drains", type: "interactive" },
-                3: { title: "Values Deep Dive", activity: "What matters most?", type: "quiz" },
-                4: { title: "Vision Board Digital", activity: "Create your soft life vision", type: "creative" },
-                5: { title: "Environment Design", activity: "Transform your space", type: "challenge" },
-                6: { title: "Morning Ritual", activity: "Design your peaceful start", type: "ritual" },
-                7: { title: "Evening Wind-Down", activity: "Create your soft close", type: "ritual" }
-            };
+        <!-- Current Week Focus -->
+        <div class="p-6 rounded-xl bg-gradient-to-r from-pink-400 to-rose-400 text-white mb-8">
+            <div class="flex items-center gap-3 mb-3">
+                <span class="text-2xl">❤️</span>
+                <h2 class="text-2xl font-bold">Week 1: Foundation</h2>
+            </div>
+            <p class="text-white/90 text-lg mb-2">Creating Your Soft Life Base</p>
+            <p class="text-white/80">Focus: From Chaos to Calm</p>
+        </div>
 
-            const markComplete = (day) => {
-                const newCompleted = new Set(completedDays);
-                if (newCompleted.has(day)) {
-                    newCompleted.delete(day);
-                } else {
-                    newCompleted.add(day);
-                }
-                setCompletedDays(newCompleted);
-            };
+        <!-- Daily Activities Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            <div class="day-card p-4 rounded-xl border-2 bg-white border-purple-300 shadow-lg" onclick="toggleDay(this, 1)">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-sm font-medium text-gray-500">Day 1</span>
+                    <div class="w-5 h-5 border-2 border-gray-300 rounded-full completion-circle"></div>
+                </div>
+                <h4 class="font-bold mb-2 text-gray-800">Soft Life Audit</h4>
+                <p class="text-sm mb-3 text-gray-600">What needs to go?</p>
+                <span class="text-xs px-2 py-1 rounded-full bg-pink-100 text-pink-700">reflection</span>
+            </div>
 
-            const getProgressPercent = () => {
-                return Math.round((completedDays.size / 30) * 100);
-            };
+            <div class="day-card p-4 rounded-xl border-2 bg-white/60 border-gray-200 hover:border-purple-200" onclick="toggleDay(this, 2)">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-sm font-medium text-gray-500">Day 2</span>
+                    <div class="w-5 h-5 border-2 border-gray-300 rounded-full completion-circle"></div>
+                </div>
+                <h4 class="font-bold mb-2 text-gray-800">Energy Assessment</h4>
+                <p class="text-sm mb-3 text-gray-600">Identify your drains</p>
+                <span class="text-xs px-2 py-1 rounded-full bg-purple-100 text-purple-700">interactive</span>
+            </div>
 
-            return React.createElement('div', { className: "min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50" },
-                React.createElement('div', { className: "bg-white/80 backdrop-blur-sm border-b border-pink-100 sticky top-0 z-50" },
-                    React.createElement('div', { className: "max-w-4xl mx-auto px-6 py-4" },
-                        React.createElement('div', { className: "flex items-center justify-between" },
-                            React.createElement('div', null,
-                                React.createElement('h1', { className: "text-2xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent" }, "Soft Life + Next-Level Life"),
-                                React.createElement('p', { className: "text-gray-600 text-sm" }, "30-day transformation journey")
-                            ),
-                            React.createElement('div', { className: "flex items-center gap-4" },
-                                React.createElement('div', { className: "text-right" },
-                                    React.createElement('p', { className: "text-sm text-gray-500" }, "Progress"),
-                                    React.createElement('p', { className: "font-bold text-purple-600" }, getProgressPercent() + "%")
-                                ),
-                                React.createElement('div', { className: "w-12 h-12 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full flex items-center justify-center" },
-                                    React.createElement(Sparkles, { className: "w-6 h-6 text-white" })
-                                )
-                            )
-                        )
-                    )
-                ),
-                React.createElement('div', { className: "max-w-4xl mx-auto px-6 py-8" },
-                    React.createElement('div', { className: "text-center mb-8" },
-                        React.createElement('h2', { className: "text-3xl font-bold text-gray-800 mb-4" }, "🎉 YOUR IDE IS LIVE! 🎉"),
-                        React.createElement('p', { className: "text-lg text-gray-600" }, "Welcome to your Soft Life + Next-Level Life transformation platform!"),
-                        React.createElement('p', { className: "text-purple-600 font-medium mt-2" }, "Click on the days below to track your progress")
-                    ),
-                    React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-4 gap-4 mb-8" },
-                        weeks.map(week => 
-                            React.createElement('div', {
-                                key: week.id,
-                                onClick: () => setCurrentWeek(week.id),
-                                className: `p-4 rounded-xl cursor-pointer transition-all duration-300 ${
-                                    currentWeek === week.id
-                                        ? `bg-gradient-to-r ${week.color} text-white shadow-lg scale-105`
-                                        : 'bg-white/60 hover:bg-white/80'
-                                }`
-                            },
-                                React.createElement('div', { className: "flex items-center gap-3 mb-2" },
-                                    week.icon,
-                                    React.createElement('h3', { className: "font-bold" }, `Week ${week.id}`)
-                                ),
-                                React.createElement('p', { className: `text-sm ${currentWeek === week.id ? 'text-white/90' : 'text-gray-600'}` }, week.title),
-                                React.createElement('p', { className: `text-xs ${currentWeek === week.id ? 'text-white/80' : 'text-gray-500'}` }, week.subtitle)
-                            )
-                        )
-                    ),
-                    React.createElement('div', { className: `p-6 rounded-xl bg-gradient-to-r ${weeks[currentWeek-1].color} text-white mb-8` },
-                        React.createElement('div', { className: "flex items-center gap-3 mb-3" },
-                            weeks[currentWeek-1].icon,
-                            React.createElement('h2', { className: "text-2xl font-bold" }, `Week ${currentWeek}: ${weeks[currentWeek-1].title}`)
-                        ),
-                        React.createElement('p', { className: "text-white/90 text-lg mb-2" }, weeks[currentWeek-1].subtitle),
-                        React.createElement('p', { className: "text-white/80" }, `Focus: ${weeks[currentWeek-1].focus}`)
-                    ),
-                    React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8" },
-                        Object.entries(dailyActivities).map(([day, activity]) => {
-                            const dayNum = parseInt(day);
-                            const isCompleted = completedDays.has(dayNum);
-                            const isCurrentDay = dayNum === currentDay;
-                            
-                            return React.createElement('div', {
-                                key: day,
-                                className: `p-4 rounded-xl border-2 transition-all duration-300 cursor-pointer ${
-                                    isCompleted
-                                        ? 'bg-gradient-to-r from-green-400 to-emerald-400 text-white border-green-300'
-                                        : isCurrentDay
-                                        ? 'bg-white border-purple-300 shadow-lg scale-105'
-                                        : 'bg-white/60 border-gray-200 hover:border-purple-200 hover:shadow-md'
-                                }`,
-                                onClick: () => markComplete(dayNum)
-                            },
-                                React.createElement('div', { className: "flex items-center justify-between mb-3" },
-                                    React.createElement('span', { className: `text-sm font-medium ${isCompleted ? 'text-white/90' : 'text-gray-500'}` }, `Day ${day}`),
-                                    isCompleted 
-                                        ? React.createElement(CheckCircle, { className: "w-5 h-5 text-white" })
-                                        : React.createElement('div', { className: "w-5 h-5 border-2 border-gray-300 rounded-full" })
-                                ),
-                                React.createElement('h4', { className: `font-bold mb-2 ${isCompleted ? 'text-white' : 'text-gray-800'}` }, activity.title),
-                                React.createElement('p', { className: `text-sm mb-3 ${isCompleted ? 'text-white/90' : 'text-gray-600'}` }, activity.activity),
-                                React.createElement('div', { className: "flex items-center justify-between" },
-                                    React.createElement('span', { 
-                                        className: `text-xs px-2 py-1 rounded-full ${
-                                            isCompleted 
-                                                ? 'bg-white/20 text-white' 
-                                                : activity.type === 'reflection' 
-                                                ? 'bg-pink-100 text-pink-700'
-                                                : activity.type === 'interactive'
-                                                ? 'bg-purple-100 text-purple-700'
-                                                : activity.type === 'quiz'
-                                                ? 'bg-blue-100 text-blue-700'
-                                                : activity.type === 'creative'
-                                                ? 'bg-orange-100 text-orange-700'
-                                                : activity.type === 'challenge'
-                                                ? 'bg-red-100 text-red-700'
-                                                : 'bg-green-100 text-green-700'
-                                        }`
-                                    }, activity.type),
-                                    !isCompleted && React.createElement(ChevronRight, { className: "w-4 h-4 text-gray-400" })
-                                )
-                            );
-                        })
-                    )
-                )
-            );
+            <div class="day-card p-4 rounded-xl border-2 bg-white/60 border-gray-200 hover:border-purple-200" onclick="toggleDay(this, 3)">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-sm font-medium text-gray-500">Day 3</span>
+                    <div class="w-5 h-5 border-2 border-gray-300 rounded-full completion-circle"></div>
+                </div>
+                <h4 class="font-bold mb-2 text-gray-800">Values Deep Dive</h4>
+                <p class="text-sm mb-3 text-gray-600">What matters most?</p>
+                <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">quiz</span>
+            </div>
+
+            <div class="day-card p-4 rounded-xl border-2 bg-white/60 border-gray-200 hover:border-purple-200" onclick="toggleDay(this, 4)">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-sm font-medium text-gray-500">Day 4</span>
+                    <div class="w-5 h-5 border-2 border-gray-300 rounded-full completion-circle"></div>
+                </div>
+                <h4 class="font-bold mb-2 text-gray-800">Vision Board Digital</h4>
+                <p class="text-sm mb-3 text-gray-600">Create your soft life vision</p>
+                <span class="text-xs px-2 py-1 rounded-full bg-orange-100 text-orange-700">creative</span>
+            </div>
+
+            <div class="day-card p-4 rounded-xl border-2 bg-white/60 border-gray-200 hover:border-purple-200" onclick="toggleDay(this, 5)">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-sm font-medium text-gray-500">Day 5</span>
+                    <div class="w-5 h-5 border-2 border-gray-300 rounded-full completion-circle"></div>
+                </div>
+                <h4 class="font-bold mb-2 text-gray-800">Environment Design</h4>
+                <p class="text-sm mb-3 text-gray-600">Transform your space</p>
+                <span class="text-xs px-2 py-1 rounded-full bg-red-100 text-red-700">challenge</span>
+            </div>
+
+            <div class="day-card p-4 rounded-xl border-2 bg-white/60 border-gray-200 hover:border-purple-200" onclick="toggleDay(this, 6)">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-sm font-medium text-gray-500">Day 6</span>
+                    <div class="w-5 h-5 border-2 border-gray-300 rounded-full completion-circle"></div>
+                </div>
+                <h4 class="font-bold mb-2 text-gray-800">Morning Ritual</h4>
+                <p class="text-sm mb-3 text-gray-600">Design your peaceful start</p>
+                <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700">ritual</span>
+            </div>
+
+            <div class="day-card p-4 rounded-xl border-2 bg-white/60 border-gray-200 hover:border-purple-200" onclick="toggleDay(this, 7)">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-sm font-medium text-gray-500">Day 7</span>
+                    <div class="w-5 h-5 border-2 border-gray-300 rounded-full completion-circle"></div>
+                </div>
+                <h4 class="font-bold mb-2 text-gray-800">Evening Wind-Down</h4>
+                <p class="text-sm mb-3 text-gray-600">Create your soft close</p>
+                <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700">ritual</span>
+            </div>
+        </div>
+
+        <!-- Progress Dashboard -->
+        <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span>📅</span>
+                Your Journey Progress
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full flex items-center justify-center">
+                        <span class="text-2xl font-bold text-white" id="completed-count">0</span>
+                    </div>
+                    <p class="font-medium text-gray-800">Days Completed</p>
+                    <p class="text-sm text-gray-500">Out of 30 days</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center">
+                        <span class="text-2xl font-bold text-white">1</span>
+                    </div>
+                    <p class="font-medium text-gray-800">Current Week</p>
+                    <p class="text-sm text-gray-500">Foundation</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full flex items-center justify-center">
+                        <span class="text-2xl">👑</span>
+                    </div>
+                    <p class="font-medium text-gray-800">Transformation Level</p>
+                    <p class="text-sm text-gray-500" id="transformation-level">Foundation</p>
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="mt-6">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium text-gray-700">Overall Progress</span>
+                    <span class="text-sm font-bold text-purple-600" id="progress-bar-percent">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div id="progress-bar" class="bg-gradient-to-r from-pink-400 to-purple-400 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Community & Support Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-gradient-to-r from-pink-400 to-rose-400 rounded-xl p-6 text-white">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-2xl">👥</span>
+                    <h3 class="text-xl font-bold">Community Support</h3>
+                </div>
+                <p class="text-white/90 mb-4">
+                    Connect with other women on the same journey. Share wins, get support, and celebrate transformations together.
+                </p>
+                <button class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors">
+                    Join Community →
+                </button>
+            </div>
+            
+            <div class="bg-gradient-to-r from-purple-400 to-pink-400 rounded-xl p-6 text-white">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-2xl">☕</span>
+                    <h3 class="text-xl font-bold">Live Coaching Calls</h3>
+                </div>
+                <p class="text-white/90 mb-4">
+                    Join weekly group coaching calls for deeper transformation, hot seat coaching, and direct guidance.
+                </p>
+                <button class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors">
+                    View Schedule →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let completedDays = new Set();
+
+        function toggleDay(element, dayNumber) {
+            const circle = element.querySelector('.completion-circle');
+            
+            if (completedDays.has(dayNumber)) {
+                // Mark as incomplete
+                completedDays.delete(dayNumber);
+                element.classList.remove('completed');
+                element.classList.add('bg-white/60', 'border-gray-200');
+                circle.innerHTML = '';
+                circle.className = 'w-5 h-5 border-2 border-gray-300 rounded-full completion-circle';
+            } else {
+                // Mark as complete
+                completedDays.add(dayNumber);
+                element.classList.add('completed');
+                element.classList.remove('bg-white/60', 'border-gray-200');
+                circle.innerHTML = '✓';
+                circle.className = 'w-5 h-5 bg-white rounded-full flex items-center justify-center text-green-600 font-bold completion-circle';
+            }
+            
+            updateProgress();
         }
 
-        ReactDOM.render(React.createElement(SoftLifeIDE), document.getElementById('root'));
+        function updateProgress() {
+            const completedCount = completedDays.size;
+            const progressPercent = Math.round((completedCount / 30) * 100);
+            
+            document.getElementById('completed-count').textContent = completedCount;
+            document.getElementById('progress-percent').textContent = progressPercent + '%';
+            document.getElementById('progress-bar-percent').textContent = progressPercent + '%';
+            document.getElementById('progress-bar').style.width = progressPercent + '%';
+            
+            let level = 'Foundation';
+            if (progressPercent >= 75) level = 'Mastery';
+            else if (progressPercent >= 50) level = 'Flowing';
+            else if (progressPercent >= 25) level = 'Building';
+            
+            document.getElementById('transformation-level').textContent = level;
+        }
     </script>
 </body>
-</html>
+</html>      
+                             
+                                       
+                                               
+                       
+       
